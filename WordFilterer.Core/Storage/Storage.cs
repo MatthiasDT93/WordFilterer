@@ -9,8 +9,8 @@ namespace WordFilterer.Core.Storage;
 
 public class Storage : IStorage
 {
-    public const string inputDirectoryPath = @"..\Storage\Data\Input\";
-    public const string outputDirectoryPath = @"..\Storage\Data\Output\";
+    public const string inputDirectoryPath = @"..\..\..\Data\Input";
+    public const string outputDirectoryPath = @"../Data/Output";
 
     public string firstfile;
 

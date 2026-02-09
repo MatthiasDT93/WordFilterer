@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Storage\Data\Input\" />
-    <Folder Include="Storage\Data\Output\" />
-    <Folder Include="Storage\NewFolder\" />
+    <Compile Remove="Storage\NewFolder\**" />
+    <EmbeddedResource Remove="Storage\NewFolder\**" />
+    <None Remove="Storage\NewFolder\**" />
   </ItemGroup>
 
 </Project>
