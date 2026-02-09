@@ -1,5 +1,11 @@
 <Solution>
+  <Folder Name="/Data/" />
+  <Folder Name="/Data/Input/" />
+  <Folder Name="/Data/Output/" />
   <Folder Name="/Solution Items/">
     <File Path=".gitignore" />
   </Folder>
+  <Project Path="WordFilterer.CLI/WordFilterer.CLI.csproj" />
+  <Project Path="WordFilterer.Core/WordFilterer.Core.csproj" />
+  <Project Path="WordFilterer.Tests/WordFilterer.Tests.csproj" />
 </Solution>
