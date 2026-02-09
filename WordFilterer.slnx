@@ -1,6 +1,8 @@
 <Solution>
   <Folder Name="/Data/" />
-  <Folder Name="/Data/Input/" />
+  <Folder Name="/Data/Input/">
+    <File Path="test.md" />
+  </Folder>
   <Folder Name="/Data/Output/" />
   <Folder Name="/Solution Items/">
     <File Path=".gitignore" />
