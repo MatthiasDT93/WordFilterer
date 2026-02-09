@@ -52,6 +52,7 @@ public class StorageShould
     [Fact]
     public void Correctly_Import_Data()
     {
+        filestore.Setup(fs => fs.FileExists(It.IsAny<string>())).Returns(true);
         filestore.Setup(fs => fs.ReadAllLines(It.IsAny<string>())).Returns(fakeInputData);
 
         var list = storage.ReadFile();

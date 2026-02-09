@@ -12,16 +12,23 @@ public class Storage : IStorage
     public const string inputDirectoryPath = @".\Data\Input\";
     public const string outputDirectoryPath = @".\Data\Output\";
 
-    public string firstfile = Directory
-                                .EnumerateFiles(inputDirectoryPath)
-                                .OrderBy(f => f)
-                                .FirstOrDefault() ?? String.Empty;
+    public string firstfile;
 
     public IFileStore _filestore;
 
     public Storage(IFileStore filestore)
     {
         _filestore = filestore;
+        try
+        {
+            firstfile = Directory
+                        .EnumerateFiles(inputDirectoryPath)
+                        .OrderBy(f => f)
+                        .FirstOrDefault() ?? String.Empty;
+        } catch (DirectoryNotFoundException)
+        {
+            firstfile = string.Empty;
+        }
     }
 
     public string[] ReadFile()
