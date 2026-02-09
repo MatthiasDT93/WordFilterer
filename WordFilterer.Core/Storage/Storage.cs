@@ -7,7 +7,7 @@ using WordFilterer.Core.Domain;
 
 namespace WordFilterer.Core.Storage;
 
-internal class Storage : IStorage
+public class Storage : IStorage
 {
     public const string inputDirectoryPath = "C:\\WordFilterer\\Data\\Input\\";
     public const string outputDirectoryPath = "C:\\WordFilterer\\Data\\Output\\";
@@ -32,8 +32,9 @@ internal class Storage : IStorage
         return _filestore.ReadAllLines(firstfile);
     }
 
-    public List<Word> LoadWords(string[] lines)
+    public List<Word> LoadWords()
     {
+        var lines = ReadFile();
         return lines.Select(l => Word.StringToWord(l)).ToList();
     }
 
@@ -54,6 +55,9 @@ internal class Storage : IStorage
 
     public List<Word> FindCombinations(List<Word> words, int targetLength)
     {
+        if (!words.Any(w => w.Length >= targetLength))
+            throw new ArgumentException("There are no words of this target length in the input data.");
+
         List<Word> result = new List<Word>();
 
         foreach (var word in words)

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WordFilterer.Core.Storage;
 
-internal interface IFileStore
+public interface IFileStore
 {
     public bool FileExists(string path);
     public string[] ReadAllLines(string path);

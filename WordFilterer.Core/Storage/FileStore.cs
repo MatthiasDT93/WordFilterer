@@ -4,7 +4,7 @@ using System.Text;
 
 namespace WordFilterer.Core.Storage;
 
-internal class FileStore : IFileStore
+public class FileStore : IFileStore
 {
     public bool FileExists(string file)
     {

@@ -5,10 +5,10 @@ using WordFilterer.Core.Domain;
 
 namespace WordFilterer.Core.Storage;
 
-internal interface IStorage
+public interface IStorage
 {
     public string[] ReadFile();
-    public List<Word> LoadWords(string[] lines);
+    public List<Word> LoadWords();
     public string[] SaveWords(List<Word> words);
     public void WriteCombinationsToFile(List<Word> words);
 

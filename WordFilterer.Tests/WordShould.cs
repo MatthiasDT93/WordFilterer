@@ -6,7 +6,7 @@ public class WordShould
     [Fact]
     public void Correctly_Initialise()
     {
-        var word = new Word("Test");
+        var word = Word.StringToWord("Test");
 
         Assert.IsType<Guid>(word.Id);
         Assert.NotEqual(Guid.Empty, word.Id);
@@ -17,7 +17,7 @@ public class WordShould
     [Fact]
     public void Be_Correctly_Converted_Into_String()
     {
-        var word = new Word("Test");
+        var word = Word.StringToWord("Test");
 
         var stringWord = Word.WordToString(word);
         Assert.Equal("Test", stringWord);
