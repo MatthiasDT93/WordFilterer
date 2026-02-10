@@ -62,6 +62,9 @@ public class Storage : IStorage
 
     public List<Word> FindCombinations(List<Word> words, int targetLength)
     {
+        if (targetLength <= 0)
+            throw new ArgumentException("Please only enter positive numbers.");
+
         if (!words.Any(w => w.Length >= targetLength))
             throw new ArgumentException("There are no words of this target length in the input data.");
 
