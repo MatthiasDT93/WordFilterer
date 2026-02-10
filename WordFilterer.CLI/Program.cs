@@ -27,5 +27,7 @@ class BasicProgram
         services.AddTransient<IMenu, Menu>();
 
         var provider = services.BuildServiceProvider();
+        var menu = provider.GetService<IMenu>();
+        menu.InputCombinationLength();
     }
 }

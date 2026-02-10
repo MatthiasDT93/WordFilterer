@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Data\Input\" />
     <Folder Include="Data\Output\" />
   </ItemGroup>
 

@@ -6,5 +6,5 @@ namespace WordFilterer.Core.UI;
 
 public interface IMenu
 {
-    void InputCombinationLength(int targetLength);
+    void InputCombinationLength();
 }
