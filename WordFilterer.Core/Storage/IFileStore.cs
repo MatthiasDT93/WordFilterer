@@ -6,7 +6,7 @@ namespace WordFilterer.Core.Storage;
 
 public interface IFileStore
 {
-    public bool FileExists(string path);
+    public IEnumerable<string> EnumerateFiles();
     public string[] ReadAllLines(string path);
     public void WriteAllLines(string path, string[] lines);
 }

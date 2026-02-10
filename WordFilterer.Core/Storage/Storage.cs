@@ -2,16 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
-using System.IO;
 using WordFilterer.Core.Domain;
 
 namespace WordFilterer.Core.Storage;
 
 public class Storage : IStorage
 {
-    public const string inputDirectoryPath = @"..\..\..\Data\Input";   // WIP: THIS GIVES ISSUES, NEED TO FIGURE IT OUT FURTHER
-    public const string outputDirectoryPath = @"../Data/Output";       // SAME AS ABOVE
-
     public string firstfile;
 
     public IFileStore _filestore;
@@ -19,24 +15,18 @@ public class Storage : IStorage
     public Storage(IFileStore filestore)
     {
         _filestore = filestore;
-        try
-        {
-            firstfile = Directory
-                        .EnumerateFiles(inputDirectoryPath)
-                        .OrderBy(f => f)
-                        .FirstOrDefault() ?? String.Empty;
-        } catch (DirectoryNotFoundException)
-        {
-            firstfile = string.Empty;
-        }
     }
 
     public string[] ReadFile()
     {
-        if (!_filestore.FileExists(firstfile))
+        var firstFile = _filestore
+                        .EnumerateFiles()
+                        .OrderBy(f => f)
+                        .FirstOrDefault();
+        if (firstFile is null)
             throw new FileNotFoundException("No file found in the Input folder.");
-
-        return _filestore.ReadAllLines(firstfile);
+        
+        return _filestore.ReadAllLines(firstFile);
     }
 
     public List<Word> LoadWords()
@@ -52,7 +42,7 @@ public class Storage : IStorage
 
     public void WriteCombinationsToFile(List<Word> combinations)
     {
-        _filestore.WriteAllLines(outputDirectoryPath+"output.txt", SaveWords(combinations));
+        _filestore.WriteAllLines("output.txt", SaveWords(combinations));
     }
 
     public bool CombinationExists(List<Word> words, string combination)

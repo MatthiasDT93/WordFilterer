@@ -2,9 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace WordFilterer.Core.Console;
+namespace WordFilterer.Core.UI;
 
-internal class InputMenu
+public class UserInput : IUserInput
 {
 }
-

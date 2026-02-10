@@ -45,7 +45,7 @@ public class StorageShould
     [Fact]
     public void Throw_If_No_Input_Available()
     {
-        filestore.Setup(fs => fs.FileExists(It.IsAny<string>())).Returns(false);
+        filestore.Setup(fs => fs.EnumerateFiles()).Returns(Enumerable.Empty<string>);
 
         var exception = Assert.Throws<FileNotFoundException>(() => storage.ReadFile());
         Assert.Equal("No file found in the Input folder.", exception.Message);
@@ -54,7 +54,7 @@ public class StorageShould
     [Fact]
     public void Correctly_Import_Data()
     {
-        filestore.Setup(fs => fs.FileExists(It.IsAny<string>())).Returns(true);
+        filestore.Setup(fs => fs.EnumerateFiles()).Returns(new[] {""});
         filestore.Setup(fs => fs.ReadAllLines(It.IsAny<string>())).Returns(fakeInputData);
 
         var list = storage.ReadFile();
@@ -65,7 +65,7 @@ public class StorageShould
     [Fact]
     public void Correctly_Convert_ReadData_To_Words()
     {
-        filestore.Setup(fs => fs.FileExists(It.IsAny<string>())).Returns(true);
+        filestore.Setup(fs => fs.EnumerateFiles()).Returns(new[] { "" });
         filestore.Setup(fs => fs.ReadAllLines(It.IsAny<string>())).Returns(fakeInputData);
 
         var list = storage.LoadWords();
