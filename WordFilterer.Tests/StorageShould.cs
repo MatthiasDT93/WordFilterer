@@ -13,6 +13,8 @@ public class StorageShould
     private readonly Storage storage;
     private readonly string[] fakeInputData;
     private readonly List<Word> readData;
+    private readonly string outputPath;
+    private readonly string inputPath;
 
     public StorageShould()
     {
@@ -36,6 +38,8 @@ public class StorageShould
             Word.StringToWord("fo"),
             Word.StringToWord("obar"),
         };
+        inputPath = "C:\\Users\\matth\\source\\repos\\WordFilterer\\Data\\Input\\input.txt";
+        outputPath = "C:\\Users\\matth\\source\\repos\\WordFilterer\\Data\\Output\\output.txt";
     }
 
     [Fact]
@@ -107,6 +111,17 @@ public class StorageShould
         Assert.Equal(2, result.Count);
         Assert.Equal("foo + bar = foobar", result[0].Content);
         Assert.Equal("fo + obar = foobar", result[1].Content);
+    }
+
+    // STILL NEED TO FIX FILE INPUT PATHS
+    [Fact(Skip = "wip")]
+    public void Call_FileStore_To_Write_Output()
+    {
+        var combinations = storage.FindCombinations(readData, 6);
+        var output = storage.SaveWords(combinations);
+        storage.WriteCombinationsToFile(combinations);
+
+        filestore.Verify(fs => fs.WriteAllLines(outputPath, output));
     }
 }
 
