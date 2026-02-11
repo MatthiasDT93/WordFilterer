@@ -17,7 +17,8 @@ public class UserInputShould
     private readonly Mock<IStorage> storage;
     private readonly UserInput userInput;
     private readonly List<Word> wordData;
-    private readonly List<Word> combinations;
+    private readonly List<Word> combinations1;
+    private readonly List<Word> combinations2;
 
     public UserInputShould()
     {
@@ -33,17 +34,18 @@ public class UserInputShould
             Word.StringToWord("fo"),
             Word.StringToWord("obar")
         };
-        combinations = new List<Word>() {
+        combinations1 = new List<Word>() {
             Word.StringToWord("foo + bar = foobar"),
             Word.StringToWord("fo + obar = foobar")
         };
+        combinations2 = new List<Word>();
     }
 
     [Fact]
     public void Use_Default_If_No_Argument()
     {
         storage.Setup(s => s.LoadWords()).Returns(wordData);
-        storage.Setup(s => s.FindCombinations(It.IsAny<List<Word>>(), It.IsAny<int>())).Returns(combinations);
+        storage.Setup(s => s.FindCombinations(It.IsAny<List<Word>>(), It.IsAny<int>())).Returns(combinations1);
         userInput.EnterTargetLength();
 
         storage.Verify(s => s.LoadWords(), Times.Once());
@@ -52,15 +54,14 @@ public class UserInputShould
         console.Verify(c => c.WriteLine("Finding combinations..."));
         storage.Verify(s => s.FindCombinations(wordData, 6), Times.Once());
         console.Verify(c => c.WriteLine("Number of combinations found: 2"));
-        storage.Verify(s => s.WriteCombinationsToFile(combinations));
+        storage.Verify(s => s.WriteCombinationsToFile(combinations1));
     }
 
     [Fact]
     public void Use_Input_Correctly()
     {
-        var newCombinations = new List<Word>();
         storage.Setup(s => s.LoadWords()).Returns(wordData);
-        storage.Setup(s => s.FindCombinations(It.IsAny<List<Word>>(), It.IsAny<int>())).Returns(newCombinations);
+        storage.Setup(s => s.FindCombinations(It.IsAny<List<Word>>(), It.IsAny<int>())).Returns(combinations2);
         userInput.EnterTargetLength(4);
 
         storage.Verify(s => s.LoadWords(), Times.Once());
@@ -69,6 +70,6 @@ public class UserInputShould
         console.Verify(c => c.WriteLine("Finding combinations..."));
         storage.Verify(s => s.FindCombinations(wordData, 4), Times.Once());
         console.Verify(c => c.WriteLine("Number of combinations found: 0"));
-        storage.Verify(s => s.WriteCombinationsToFile(newCombinations));
+        storage.Verify(s => s.WriteCombinationsToFile(combinations2));
     }
 }
