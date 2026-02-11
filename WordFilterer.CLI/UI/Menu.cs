@@ -33,23 +33,30 @@ public class Menu : IMenu
                 break;
             }
 
-            if (string.IsNullOrWhiteSpace(input) || int.Parse(input) == 6)
+            if (string.IsNullOrWhiteSpace(input))
             {
-                _console.WriteLine("You select the default option: 6");
+                _console.WriteLine("You selected the default option: 6");
                 _userInput.EnterTargetLength();
                 break;
             }
 
-            if (int.TryParse(input, out _))
-            {
-                var choice = int.Parse(input);
-                _console.WriteLine($"You selected: {input}");
-                _userInput.EnterTargetLength(choice);
-                break;
-            } else
+            if (!int.TryParse(input, out _)) 
             {
                 _console.WriteLine("Invalid choice.");
+                break;
             }
+
+            if(int.Parse(input) == 6)
+            {
+                _console.WriteLine("You selected the default option: 6");
+                _userInput.EnterTargetLength();
+                break;
+            }
+
+            var choice = int.Parse(input);
+            _console.WriteLine($"You selected: {input}");
+            _userInput.EnterTargetLength(choice);
+            break;
         }
     }
 }

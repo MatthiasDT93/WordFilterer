@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WordFilterer.Core\WordFilterer.Core.csproj" />
+	<ProjectReference Include="..\WordFilterer.CLI\WordFilterer.CLI.csproj" />
   </ItemGroup>
 
 </Project>
