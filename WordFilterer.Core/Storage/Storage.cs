@@ -45,9 +45,9 @@ public class Storage : IStorage
         _filestore.WriteAllLines("output.txt", SaveWords(combinations));
     }
 
-    public bool CombinationExists(List<Word> words, string combination)
+    public bool CombinationExists(HashSet<string> stringWords, Word word1, Word word2)
     {
-        return words.Any(w => w.Content==combination);
+        return stringWords.Contains(word1.Content + word2.Content);
     }
 
     public List<Word> FindCombinations(List<Word> words, int targetLength)
@@ -61,16 +61,18 @@ public class Storage : IStorage
         HashSet<string> matchWords = words.Where(w => w.Length == targetLength).Select(w => w.Content).ToHashSet();
         List<Word> searchWords = words.Where(w => w.Length <= targetLength).ToList();
         List<string> stringResult = new List<string>();
+
         foreach(var word in searchWords)
         {
             foreach(var combo in searchWords)
             {
-                if (combo.Id != word.Id && matchWords.Contains(combo.Content + word.Content))
+                if (combo.Id != word.Id && CombinationExists(matchWords, word, combo))
                 {
                     stringResult.Add($"{word.Content} + {combo.Content} = {word.Content + combo.Content}");
                 }
             }
         }
+
         var result = stringResult.Distinct().Select(x => Word.StringToWord(x)).ToList();
 
         return result.OrderBy(w => w.Content.Split(" = ")[1]).ToList();

@@ -12,7 +12,7 @@ public interface IStorage
     public string[] SaveWords(List<Word> words);
     public void WriteCombinationsToFile(List<Word> words);
 
-    public bool CombinationExists(List<Word> words, string combination);
+    public bool CombinationExists(HashSet<string> stringWords, Word word1, Word word2);
     public List<Word> FindCombinations(List<Word> words, int targetLength);
 }
 
