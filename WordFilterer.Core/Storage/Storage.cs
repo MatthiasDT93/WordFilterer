@@ -109,5 +109,45 @@ public class Storage : IStorage
     //        }
     //    }
     //}
+
+
+    //public List<Word> combtest(List<Word> words, Word targetWord)
+    //{
+    //    var stringResult = new List<string>();
+        
+
+    //    foreach(var word in words)
+    //    {
+    //        StringBuilder sb = new StringBuilder();
+    //        if (targetWord.Content.StartsWith(sb.Append(word.Content).ToString())) 
+    //        { 
+    //            sb.Append(word.Content);
+    //        }
+    //        if (sb.ToString() == targetWord.Content)
+    //        { 
+    //            stringResult.
+    //        }
+    //    }
+
+    //    return stringResult.Select(s => Word.StringToWord(s)).ToList();
+    //}
+
+
+    //public List<Word> recursiontest(List<Word> words, Word targetWord, List<string> builderList, string builderWord = "")
+    //{
+    //    foreach(var word in words)
+    //    {
+    //        if(targetWord.Content == builderWord)
+    //        {
+
+    //        }
+    //        if (targetWord.Content.StartsWith(builderWord + word.Content))
+    //        {
+    //            builderWord = builderWord + word.Content;
+    //            builderList.Add(word.Content);
+    //            recursiontest(words, targetWord, builderList, builderWord);
+    //        }
+    //    }
+    //}
 }
 
