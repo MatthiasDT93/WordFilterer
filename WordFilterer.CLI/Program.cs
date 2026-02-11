@@ -13,10 +13,10 @@ class BasicProgram
 {
     public static void Run()
     {
-        var baseDir = AppContext.BaseDirectory;
+        var projectDataDir = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "Data"));
 
-        var inputDir = Path.Combine(baseDir, "Data", "Input");
-        var outputDir = Path.Combine(baseDir, "Data", "Output");
+        var inputDir = Path.Combine(projectDataDir, "Data", "Input");
+        var outputDir = Path.Combine(projectDataDir, "Data", "Output");
 
         var services = new ServiceCollection();
 

@@ -8,12 +8,6 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.2" />
   </ItemGroup>
 
-    <ItemGroup>
-	    <None Include="Data\Input\**\*">
-		    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	    </None>
-    </ItemGroup>
-
   <ItemGroup>
 	  <None Include="Data\Output\**\*">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
