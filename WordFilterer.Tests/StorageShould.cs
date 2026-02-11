@@ -36,7 +36,7 @@ public class StorageShould
             Word.StringToWord("bar"),
             Word.StringToWord("foobar"),
             Word.StringToWord("fo"),
-            Word.StringToWord("obar"),
+            Word.StringToWord("obar")
         };
 
         inputPath = "C:\\Users\\matth\\source\\repos\\WordFilterer\\Data\\Input\\input.txt";

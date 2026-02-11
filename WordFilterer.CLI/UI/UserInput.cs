@@ -9,19 +9,21 @@ namespace WordFilterer.CLI.UI;
 public class UserInput : IUserInput
 {
     private readonly IStorage _storage;
+    private readonly IConsole _console;
 
-    public UserInput(IStorage storage)
+    public UserInput(IStorage storage, IConsole console)
     {
         _storage = storage;
+        _console = console;
     }
     public void EnterTargetLength(int targetLength = 6)
     {
         var words = _storage.LoadWords();
-        Console.WriteLine($"Total number of words found in the input file: {words.Count}");
-        Console.WriteLine($"Total number of words satisfying length <= {targetLength}: {words.Where(w => w.Length <= targetLength).ToList().Count}");
-        Console.WriteLine("Finding combinations...");
+        _console.WriteLine($"Total number of words found in the input file: {words.Count}");
+        _console.WriteLine($"Total number of words satisfying length <= {targetLength}: {words.Where(w => w.Length <= targetLength).ToList().Count}");
+        _console.WriteLine("Finding combinations...");
         var combinations = _storage.FindCombinations(words, targetLength);
-        Console.WriteLine($"Number of combinations found: {combinations.Count}");
+        _console.WriteLine($"Number of combinations found: {combinations.Count}");
         _storage.WriteCombinationsToFile(combinations);
     }
 }
