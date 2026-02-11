@@ -1,9 +1,9 @@
 ﻿using System.Security.Authentication.ExtendedProtection;
 using Microsoft.Extensions.DependencyInjection;
-using WordFilterer.Core;
 using WordFilterer.Core.Storage;
-using WordFilterer.CLI.FileStore;
 using WordFilterer.Core.UI;
+using WordFilterer.CLI.FileStore;
+using WordFilterer.CLI.UI;
 using WordFilterer.CLI.Consoles;
 
 
@@ -28,6 +28,6 @@ class BasicProgram
 
         var provider = services.BuildServiceProvider();
         var menu = provider.GetService<IMenu>();
-        menu.InputCombinationLength();
+        menu!.InputCombinationLength();
     }
 }

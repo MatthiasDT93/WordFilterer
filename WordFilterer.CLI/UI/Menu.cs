@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-//using WordFilterer.CLI.Console;
+using WordFilterer.Core.UI;
 
-namespace WordFilterer.Core.UI;
+namespace WordFilterer.CLI.UI;
 
 public class Menu : IMenu
 {

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 using WordFilterer.Core.Storage;
+using WordFilterer.Core.UI;
 
-namespace WordFilterer.Core.UI;
+namespace WordFilterer.CLI.UI;
 
 public class UserInput : IUserInput
 {
