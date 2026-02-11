@@ -6,5 +6,5 @@ namespace WordFilterer.Core.UI;
 
 public interface IUserInput
 {
-    public void EnterTargetLength(int targetLength);
+    public void EnterTargetLength(int targetLength = 6);
 }

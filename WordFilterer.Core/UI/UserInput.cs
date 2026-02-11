@@ -16,7 +16,11 @@ public class UserInput : IUserInput
     public void EnterTargetLength(int targetLength = 6)
     {
         var words = _storage.LoadWords();
+        Console.WriteLine($"Total number of words found in the input file: {words.Count}");
+        Console.WriteLine($"Total number of words satisfying length <= {targetLength}: {words.Where(w => w.Length <= targetLength).ToList().Count}");
+        Console.WriteLine("Finding combinations...");
         var combinations = _storage.FindCombinations(words, targetLength);
+        Console.WriteLine($"Number of combinations found: {combinations.Count}");
         _storage.WriteCombinationsToFile(combinations);
     }
 }

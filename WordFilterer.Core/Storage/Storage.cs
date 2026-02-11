@@ -58,22 +58,22 @@ public class Storage : IStorage
         if (!words.Any(w => w.Length >= targetLength))
             throw new ArgumentException("There are no words of this target length in the input data.");
 
-        List<Word> result = new List<Word>();
-
-        foreach (var word in words)
+        HashSet<string> matchWords = words.Where(w => w.Length == targetLength).Select(w => w.Content).ToHashSet();
+        List<Word> searchWords = words.Where(w => w.Length <= targetLength).ToList();
+        List<string> stringResult = new List<string>();
+        foreach(var word in searchWords)
         {
-            var temp = new List<Word>();
-            foreach (var combo in words)
+            foreach(var combo in searchWords)
             {
-                if(combo.Id != word.Id && combo.Length + word.Length == targetLength && CombinationExists(words, word.Content + combo.Content))
+                if (combo.Id != word.Id && matchWords.Contains(combo.Content + word.Content))
                 {
-                    temp.Add(Word.StringToWord($"{word.Content} + {combo.Content} = {word.Content+combo.Content}"));
+                    stringResult.Add($"{word.Content} + {combo.Content} = {word.Content + combo.Content}");
                 }
             }
-            result.AddRange(temp);
         }
+        var result = stringResult.Distinct().Select(x => Word.StringToWord(x)).ToList();
 
-        return result;
+        return result.OrderBy(w => w.Content.Split(" = ")[1]).ToList();
     }
 
 

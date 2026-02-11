@@ -109,8 +109,8 @@ public class StorageShould
         var result = storage.FindCombinations(readData, 6);
 
         Assert.Equal(2, result.Count);
-        Assert.Equal("foo + bar = foobar", result[0].Content);
-        Assert.Equal("fo + obar = foobar", result[1].Content);
+        Assert.Equal("fo + obar = foobar", result[0].Content);
+        Assert.Equal("foo + bar = foobar", result[1].Content);
     }
 
     // STILL NEED TO FIX FILE INPUT PATHS
