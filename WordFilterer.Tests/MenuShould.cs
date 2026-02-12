@@ -26,59 +26,108 @@ public class MenuShould
     {
         console.Setup(c => c.ReadLine()).Returns("q");
 
-        menu.InputCombinationLength();
+        menu.GenerateCombinations();
 
-        console.Verify(c => c.WriteLine("Please place your input file in the Input folder, and enter a positive number to define combination length (default: 6)"));
-        console.Verify(c => c.WriteLine("Press 'q' to quit, press ENTER to use the default length (6)"));
+        console.Verify(c => c.WriteLine("Please place your input file in the Input folder."));
+        console.Verify(c => c.WriteLine("Find combinations of two words? (Y) or any number of words (N)."));
+        console.Verify(c => c.WriteLine("Enter a positive number to define the length of the words of which combinations need to be generated (default: 6)."));
+        console.Verify(c => c.WriteLine("Press 'q' to quit, press ENTER to use the default option."));
         console.Verify(c => c.WriteLine("Shutting down..."));
     }
 
     [Fact]
     public void Use_Default_If_Nothing_Entered()
     {
-        console.Setup(c => c.ReadLine()).Returns("");
+        var sequence = new MockSequence();
+        console.InSequence(sequence).Setup(c => c.ReadLine()).Returns("");
+        console.InSequence(sequence).Setup(c => c.ReadLine()).Returns("");
 
-        menu.InputCombinationLength();
+        menu.GenerateCombinations();
 
+        console.Verify(c => c.WriteLine("You selected the default option: Y"));
         console.Verify(c => c.WriteLine("You selected the default option: 6"));
+    }
+
+    [Fact]
+    public void Shuts_Down_If_q_Nothing_Entered()
+    {
+        var sequence = new MockSequence();
+        console.InSequence(sequence).Setup(c => c.ReadLine()).Returns("");
+        console.InSequence(sequence).Setup(c => c.ReadLine()).Returns("q");
+
+        menu.GenerateCombinations();
+
+        console.Verify(c => c.WriteLine("Shutting down..."));
+    }
+
+    [Fact]
+    public void Use_Default_If_Y_Entered()
+    {
+        var sequence = new MockSequence();
+        console.InSequence(sequence).Setup(c => c.ReadLine()).Returns("Y");
+        console.InSequence(sequence).Setup(c => c.ReadLine()).Returns("");
+
+        menu.GenerateCombinations();
+
+        console.Verify(c => c.WriteLine("You selected the default option: Y"));
     }
 
     [Fact]
     public void Use_Default_If_6_Entered()
     {
-        console.Setup(c => c.ReadLine()).Returns("");
+        var sequence = new MockSequence();
+        console.InSequence(sequence).Setup(c => c.ReadLine()).Returns("");
+        console.InSequence(sequence).Setup(c => c.ReadLine()).Returns("6");
 
-        menu.InputCombinationLength();
+        menu.GenerateCombinations();
 
         console.Verify(c => c.WriteLine("You selected the default option: 6"));
     }
 
     [Fact]
-    public void Show_Your_Input_Correctly()
+    public void Show_Combination_Input_Correctly()
     {
-        console.Setup(c => c.ReadLine()).Returns("4");
+        var sequence = new MockSequence();
+        console.InSequence(sequence).Setup(c => c.ReadLine()).Returns("N");
+        console.InSequence(sequence).Setup(c => c.ReadLine()).Returns("");
 
-        menu.InputCombinationLength();
+        menu.GenerateCombinations();
+
+        console.Verify(c => c.WriteLine("You selected the option: N"));
+    }
+
+    [Fact]
+    public void Show_Length_Input_Correctly()
+    {
+        var sequence = new MockSequence();
+        console.InSequence(sequence).Setup(c => c.ReadLine()).Returns("");
+        console.InSequence(sequence).Setup(c => c.ReadLine()).Returns("4");
+
+        menu.GenerateCombinations();
 
         console.Verify(c => c.WriteLine("You selected: 4"));
     }
 
     [Fact]
-    public void Use_Your_Input_Correctly()
+    public void Use_Input_For_Length_Correctly()
     {
-        console.Setup(c => c.ReadLine()).Returns("4");
+        var sequence = new MockSequence();
+        console.InSequence(sequence).Setup(c => c.ReadLine()).Returns("");
+        console.InSequence(sequence).Setup(c => c.ReadLine()).Returns("4");
 
-        menu.InputCombinationLength();
+        menu.GenerateCombinations();
 
-        userinput.Verify(u => u.EnterTargetLength(4), Times.Once());
+        userinput.Verify(u => u.CalculateCombinations(4), Times.Once());
     }
 
     [Fact]
-    public void Handle_Letter_Input()
+    public void Handle_Letter_Input_For_Length()
     {
-        console.Setup(c => c.ReadLine()).Returns("a");
+        var sequence = new MockSequence();
+        console.InSequence(sequence).Setup(c => c.ReadLine()).Returns("");
+        console.InSequence(sequence).Setup(c => c.ReadLine()).Returns("a");
 
-        menu.InputCombinationLength();
+        menu.GenerateCombinations();
 
         console.Verify(c => c.WriteLine("Invalid choice."));
     }

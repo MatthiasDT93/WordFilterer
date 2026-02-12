@@ -46,7 +46,7 @@ public class UserInputShould
     {
         storage.Setup(s => s.LoadWords()).Returns(wordData);
         storage.Setup(s => s.FindCombinations(It.IsAny<List<Word>>(), It.IsAny<int>())).Returns(combinations1);
-        userInput.EnterTargetLength();
+        userInput.CalculateCombinations();
 
         storage.Verify(s => s.LoadWords(), Times.Once());
         console.Verify(c => c.WriteLine("Total number of words found in the input file: 7"));
@@ -62,7 +62,7 @@ public class UserInputShould
     {
         storage.Setup(s => s.LoadWords()).Returns(wordData);
         storage.Setup(s => s.FindCombinations(It.IsAny<List<Word>>(), It.IsAny<int>())).Returns(combinations2);
-        userInput.EnterTargetLength(4);
+        userInput.CalculateCombinations(4);
 
         storage.Verify(s => s.LoadWords(), Times.Once());
         console.Verify(c => c.WriteLine("Total number of words found in the input file: 7"));
@@ -71,5 +71,21 @@ public class UserInputShould
         storage.Verify(s => s.FindCombinations(wordData, 4), Times.Once());
         console.Verify(c => c.WriteLine("Number of combinations found: 0"));
         storage.Verify(s => s.WriteCombinationsToFile(combinations2));
+    }
+
+    [Fact]
+    public void Calls_Correct_Storage_Method_When_Any_Combinations_Requested()
+    {
+        storage.Setup(s => s.LoadWords()).Returns(wordData);
+        storage.Setup(s => s.FindAnyCombinations(It.IsAny<List<Word>>(), It.IsAny<int>())).Returns(combinations1);
+        userInput.CalculateCombinations(binaryCombinations: false);
+
+        storage.Verify(s => s.LoadWords(), Times.Once());
+        console.Verify(c => c.WriteLine("Total number of words found in the input file: 7"));
+        console.Verify(c => c.WriteLine("Total number of words satisfying length <= 6: 7"));
+        console.Verify(c => c.WriteLine("Finding combinations..."));
+        storage.Verify(s => s.FindAnyCombinations(wordData, 6), Times.Once());
+        console.Verify(c => c.WriteLine("Number of combinations found: 2"));
+        storage.Verify(s => s.WriteCombinationsToFile(combinations1));
     }
 }

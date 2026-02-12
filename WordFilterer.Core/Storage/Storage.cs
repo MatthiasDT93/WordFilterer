@@ -79,6 +79,53 @@ public class Storage : IStorage
     }
 
 
+    // Recursion try-out
+
+    public List<Word> FindAnyCombinations(List<Word> words, int targetLength)
+    {
+        if (targetLength <= 0)
+            throw new ArgumentException("Please only enter positive numbers.");
+
+        if (!words.Any(w => w.Length >= targetLength))
+            throw new ArgumentException("There are no words of this target length in the input data.");
+
+        HashSet<Word> matchWords = words.Where(w => w.Length == targetLength).ToHashSet();
+        var combinations = new List<string>();
+
+        foreach(var word in matchWords)
+        {
+            var parts = words.Where(w => word.Content.Contains(w.Content)).ToHashSet();
+            var result = new List<string>();
+            var workList = new List<string>();
+            FindCombinationsForWord(word.Content, parts, workList, result);
+            combinations.AddRange(result);
+        }
+
+        return combinations.Distinct().Select(r => Word.StringToWord(r)).OrderBy(w => w.Content.Split(" = ")[1]).ToList();
+    }
+
+    public void FindCombinationsForWord(string remaining, HashSet<Word> parts, List<string> workList, List<string> result)
+    {
+        if ((remaining == ""))
+        {
+            if(string.Join(" + ", workList) != string.Join("", workList))
+            {
+                result.Add(string.Join(" + ", workList) + " = " + string.Join("", workList));
+            }
+            return;
+        }
+        foreach (var part in parts)
+        {
+            if (remaining.StartsWith(part.Content))
+            {
+                workList.Add(part.Content);
+                FindCombinationsForWord(remaining.Substring(part.Length), parts, workList, result);
+                workList.RemoveAt(workList.Count - 1);
+            }
+        }
+    }
+
+
     //public string MakeCombination(List<Word> words, Word word)
     //{
     //    StringBuilder sb = new StringBuilder();
@@ -114,7 +161,7 @@ public class Storage : IStorage
     //public List<Word> combtest(List<Word> words, Word targetWord)
     //{
     //    var stringResult = new List<string>();
-        
+
 
     //    foreach(var word in words)
     //    {

@@ -14,5 +14,6 @@ public interface IStorage
 
     public bool CombinationExists(HashSet<string> stringWords, Word word1, Word word2);
     public List<Word> FindCombinations(List<Word> words, int targetLength);
+    public List<Word> FindAnyCombinations(List<Word> words, int targetLength);
 }
 

@@ -6,5 +6,5 @@ namespace WordFilterer.Core.UI;
 
 public interface IUserInput
 {
-    public void EnterTargetLength(int targetLength = 6);
+    public void CalculateCombinations(int targetLength = 6, bool binaryCombinations = true);
 }

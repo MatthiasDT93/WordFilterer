@@ -16,13 +16,13 @@ public class UserInput : IUserInput
         _storage = storage;
         _console = console;
     }
-    public void EnterTargetLength(int targetLength = 6)
+    public void CalculateCombinations(int targetLength = 6, bool binaryCombinations = true)
     {
         var words = _storage.LoadWords();
         _console.WriteLine($"Total number of words found in the input file: {words.Count}");
         _console.WriteLine($"Total number of words satisfying length <= {targetLength}: {words.Where(w => w.Length <= targetLength).ToList().Count}");
         _console.WriteLine("Finding combinations...");
-        var combinations = _storage.FindCombinations(words, targetLength);
+        var combinations = binaryCombinations ? _storage.FindCombinations(words, targetLength) : _storage.FindAnyCombinations(words, targetLength);
         _console.WriteLine($"Number of combinations found: {combinations.Count}");
         _storage.WriteCombinationsToFile(combinations);
     }

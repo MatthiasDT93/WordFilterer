@@ -28,6 +28,6 @@ class BasicProgram
 
         var provider = services.BuildServiceProvider();
         var menu = provider.GetService<IMenu>();
-        menu!.InputCombinationLength();
+        menu!.GenerateCombinations();
     }
 }
