@@ -31,7 +31,7 @@ public class MenuShould
         console.Verify(c => c.WriteLine("Please place your input file in the Input folder."));
         console.Verify(c => c.WriteLine("Find combinations of two words? (Y) or any number of words (N)."));
         console.Verify(c => c.WriteLine("Enter a positive number to define the length of the words of which combinations need to be generated (default: 6)."));
-        console.Verify(c => c.WriteLine("Press 'q' to quit, press ENTER to use the default option."));
+        console.Verify(c => c.WriteLine("Press 'Q' to quit, press ENTER to use the default option."));
         console.Verify(c => c.WriteLine("Shutting down..."));
     }
 

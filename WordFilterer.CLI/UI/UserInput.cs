@@ -23,7 +23,7 @@ public class UserInput : IUserInput
     {
         var words = _storage.LoadDataIntoWords();
         _console.WriteLine($"Total number of words found in the input file: {words.Count}");
-        _console.WriteLine($"Total number of words satisfying length <= {targetLength}: {words.Where(w => w.Length <= targetLength).ToList().Count}");
+        _console.WriteLine($"Total number of words satisfying length <= {targetLength}: {words.Count(w => w.Length <= targetLength)}");
         _console.WriteLine("Finding combinations...");
         var combinations = binaryCombinations ? _combinationFinder.FindCombinations(words, targetLength) : _combinationFinder.FindAnyCombinations(words, targetLength);
         _console.WriteLine($"Number of combinations found: {combinations.Count}");

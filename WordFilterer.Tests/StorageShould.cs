@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using Moq;
 using WordFilterer.Core.Domain;
 using WordFilterer.Core.Storage;
@@ -21,7 +22,7 @@ public class StorageShould
         filestore = new Mock<IFileStore>();
         combinationFinder = new Mock<ICombinationFinder>();
         storage = new Storage(filestore.Object);
-        stringArrayData = [
+        stringArrayData = new[] {
             "te",
             "st",
             "foo",
@@ -30,7 +31,7 @@ public class StorageShould
             "fo",
             "o",
             "obar"
-        ];
+        };
         wordData = new List<Word>() {
             Word.StringToWord("te"),
             Word.StringToWord("st"),
@@ -46,7 +47,7 @@ public class StorageShould
     [Fact]
     public void Throw_If_No_Input_Available()
     {
-        filestore.Setup(fs => fs.EnumerateFiles()).Returns(Enumerable.Empty<string>);
+        filestore.Setup(fs => fs.EnumerateFiles()).Returns(Enumerable.Empty<string>());
 
         var exception = Assert.Throws<FileNotFoundException>(() => storage.ReadDataFromFile());
         Assert.Equal("No file found in the Input folder.", exception.Message);
