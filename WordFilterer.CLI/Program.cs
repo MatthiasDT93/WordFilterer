@@ -15,8 +15,8 @@ class BasicProgram
     {
         var projectDataDir = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "Data"));
 
-        var inputDir = Path.Combine(projectDataDir, "Data", "Input");
-        var outputDir = Path.Combine(projectDataDir, "Data", "Output");
+        var inputDir = Path.Combine(projectDataDir, "Input");
+        var outputDir = Path.Combine(projectDataDir, "Output");
 
         var services = new ServiceCollection();
 

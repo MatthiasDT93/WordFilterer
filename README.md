@@ -1,6 +1,6 @@
 # Happy flow steps
 
-## place input file in WordFilterer.CLI/Data/Data/Input
+## place input file in WordFilterer.CLI/Data/Input
 
 ## open a terminal in WordFilterer.CLI
 
@@ -10,4 +10,4 @@
 	- A choice wether to generate combinations of two words (Y), any number of words (N), quit (q)
 	- A length of which words you want to find combinations for (positive number)
 
-## output file will be generated in WordFilterer.CLI/Data/Data/Ouput
+## output file will be generated in WordFilterer.CLI/Data/Ouput
