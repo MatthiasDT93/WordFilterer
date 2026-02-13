@@ -27,6 +27,7 @@ public class StorageShould
             "bar",
             "foobar",
             "fo",
+            "o",
             "obar"
         ];
         wordData = new List<Word>() {
@@ -36,11 +37,9 @@ public class StorageShould
             Word.StringToWord("bar"),
             Word.StringToWord("foobar"),
             Word.StringToWord("fo"),
+            Word.StringToWord("o"),
             Word.StringToWord("obar")
         };
-
-        inputPath = "C:\\Users\\matth\\source\\repos\\WordFilterer\\Data\\Input\\input.txt";
-        outputPath = "C:\\Users\\matth\\source\\repos\\WordFilterer\\Data\\Output\\output.txt";
     }
 
     [Fact]
@@ -71,7 +70,7 @@ public class StorageShould
 
         var list = storage.LoadWords();
 
-        Assert.Equal(7, list.Count);
+        Assert.Equal(8, list.Count);
         Assert.Equal("te", list[0].Content);
         Assert.IsType<Word>(list[0]);
     }
@@ -120,15 +119,25 @@ public class StorageShould
         Assert.Contains(result, w => w.Content == "foo + bar = foobar");
     }
 
-    // STILL NEED TO FIX FILE INPUT PATHS
-    [Fact(Skip = "wip")]
+    [Fact]
+    public void Correctly_Find_Combinations_Of_Any_Number_Of_Words()
+    {
+        var result = storage.FindAnyCombinations(wordData, 6);
+
+        Assert.Equal(3, result.Count);
+        Assert.Contains(result, w => w.Content == "fo + obar = foobar");
+        Assert.Contains(result, w => w.Content == "foo + bar = foobar");
+        Assert.Contains(result, w => w.Content == "fo + o + bar = foobar");
+    }
+
+    [Fact]
     public void Call_FileStore_To_Write_Output()
     {
         var combinations = storage.FindCombinations(wordData, 6);
         var output = storage.SaveWords(combinations);
         storage.WriteCombinationsToFile(combinations);
 
-        filestore.Verify(fs => fs.WriteAllLines(outputPath, output));
+        filestore.Verify(fs => fs.WriteAllLines("output.txt", It.IsAny<string[]>()));
     }
 }
 

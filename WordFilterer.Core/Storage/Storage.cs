@@ -79,7 +79,7 @@ public class Storage : IStorage
     }
 
 
-    // Recursion try-out
+    // Recursion for any combination of words
 
     public List<Word> FindAnyCombinations(List<Word> words, int targetLength)
     {
@@ -108,7 +108,7 @@ public class Storage : IStorage
     {
         if ((remaining == ""))
         {
-            if(string.Join(" + ", workList) != string.Join("", workList))
+            if(workList.Count > 1)
             {
                 result.Add(string.Join(" + ", workList) + " = " + string.Join("", workList));
             }
