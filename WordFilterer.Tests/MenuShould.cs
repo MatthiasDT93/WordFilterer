@@ -49,11 +49,23 @@ public class MenuShould
     }
 
     [Fact]
-    public void Shuts_Down_If_q_Nothing_Entered()
+    public void Shuts_Down_If_Default_Then_q_Entered()
     {
         var sequence = new MockSequence();
         console.InSequence(sequence).Setup(c => c.ReadLine()).Returns("");
         console.InSequence(sequence).Setup(c => c.ReadLine()).Returns("q");
+
+        menu.GenerateCombinations();
+
+        console.Verify(c => c.WriteLine("Shutting down..."));
+    }
+
+    [Fact]
+    public void Shuts_Down_If_q_Then_Number_Entered()
+    {
+        var sequence = new MockSequence();
+        console.InSequence(sequence).Setup(c => c.ReadLine()).Returns("q");
+        console.InSequence(sequence).Setup(c => c.ReadLine()).Returns("4");
 
         menu.GenerateCombinations();
 

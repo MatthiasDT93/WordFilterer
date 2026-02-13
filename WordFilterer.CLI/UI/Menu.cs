@@ -35,7 +35,7 @@ public class Menu : IMenu
             _console.WriteLine("Combination length:");
             var input = _console.ReadLine() ?? string.Empty;
 
-            if (input == "q" || comboChoiceInput == "q")
+            if (input.ToLower() == "q" || comboChoiceInput.ToLower() == "q")
             {
                 quit = true;
                 _console.WriteLine("Shutting down...");
