@@ -80,6 +80,7 @@ public class Storage : IStorage
 
 
     // Recursion for any combination of words
+    // could be improved with memoisation to avoid unnecessary re-calculations
 
     public List<Word> FindAnyCombinations(List<Word> words, int targetLength)
     {
