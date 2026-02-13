@@ -7,13 +7,9 @@ namespace WordFilterer.Core.Storage;
 
 public interface IStorage
 {
-    public string[] ReadFile();
-    public List<Word> LoadWords();
-    public string[] SaveWords(List<Word> words);
+    public string[] ReadDataFromFile();
+    public List<Word> LoadDataIntoWords();
+    public string[] SaveWordsIntoData(List<Word> words);
     public void WriteCombinationsToFile(List<Word> words);
-
-    public bool CombinationExists(HashSet<string> stringWords, Word word1, Word word2);
-    public List<Word> FindCombinations(List<Word> words, int targetLength);
-    public List<Word> FindAnyCombinations(List<Word> words, int targetLength);
 }
 

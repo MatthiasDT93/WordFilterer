@@ -5,6 +5,7 @@ using WordFilterer.Core.UI;
 using WordFilterer.CLI.FileStore;
 using WordFilterer.CLI.UI;
 using WordFilterer.CLI.Consoles;
+using WordFilterer.Core.Combinations;
 
 
 BasicProgram.Run();
@@ -25,6 +26,7 @@ class BasicProgram
         services.AddTransient<IConsole, SystemConsole>();
         services.AddTransient<IUserInput, UserInput>();
         services.AddTransient<IMenu, Menu>();
+        services.AddTransient<ICombinationFinder, CombinationFinder>();
 
         var provider = services.BuildServiceProvider();
         var menu = provider.GetService<IMenu>();

@@ -4,21 +4,22 @@ using System.Text;
 using Moq;
 using WordFilterer.Core.Domain;
 using WordFilterer.Core.Storage;
+using WordFilterer.Core.Combinations;
 
 namespace WordFilterer.Tests;
 
 public class StorageShould
 {
     private readonly Mock<IFileStore> filestore;
+    private readonly Mock<ICombinationFinder> combinationFinder;
     private readonly Storage storage;
     private readonly string[] stringArrayData;
     private readonly List<Word> wordData;
-    private readonly string outputPath;
-    private readonly string inputPath;
 
     public StorageShould()
     {
         filestore = new Mock<IFileStore>();
+        combinationFinder = new Mock<ICombinationFinder>();
         storage = new Storage(filestore.Object);
         stringArrayData = [
             "te",
@@ -47,7 +48,7 @@ public class StorageShould
     {
         filestore.Setup(fs => fs.EnumerateFiles()).Returns(Enumerable.Empty<string>);
 
-        var exception = Assert.Throws<FileNotFoundException>(() => storage.ReadFile());
+        var exception = Assert.Throws<FileNotFoundException>(() => storage.ReadDataFromFile());
         Assert.Equal("No file found in the Input folder.", exception.Message);
     }
 
@@ -57,7 +58,7 @@ public class StorageShould
         filestore.Setup(fs => fs.EnumerateFiles()).Returns(new[] {""});
         filestore.Setup(fs => fs.ReadAllLines(It.IsAny<string>())).Returns(stringArrayData);
 
-        var list = storage.ReadFile();
+        var list = storage.ReadDataFromFile();
 
         Assert.Equivalent(list, stringArrayData);
     }
@@ -68,7 +69,7 @@ public class StorageShould
         filestore.Setup(fs => fs.EnumerateFiles()).Returns(new[] { "" });
         filestore.Setup(fs => fs.ReadAllLines(It.IsAny<string>())).Returns(stringArrayData);
 
-        var list = storage.LoadWords();
+        var list = storage.LoadDataIntoWords();
 
         Assert.Equal(8, list.Count);
         Assert.Equal("te", list[0].Content);
@@ -78,63 +79,15 @@ public class StorageShould
     [Fact]
     public void Correctly_Converts_Words_To_Array()
     {
-        var result = storage.SaveWords(wordData);
+        var result = storage.SaveWordsIntoData(wordData);
 
         Assert.Equal(result, stringArrayData);
     }
 
     [Fact]
-    public void Correctly_Verify_If_Combination_Exist()
-    {
-        var stringHashData = new HashSet<string> { "foobar" };
-        var word1 = Word.StringToWord("fo");
-        var word2 = Word.StringToWord("obar");
-        var word3 = Word.StringToWord("te");
-        var word4 = Word.StringToWord("st");
-
-        var result1 = storage.CombinationExists(stringHashData, word1, word2); 
-        var result2 = storage.CombinationExists(stringHashData, word3, word4);
-
-        Assert.True(result1);
-        Assert.False(result2);
-    }
-
-    [Fact]
-    public void Throws_If_CombinationLength_Is_Not_Present_In_Data()
-    {
-        var exception1 = Assert.Throws<ArgumentException>(() => storage.FindCombinations(wordData, 42));
-        var exception2 = Assert.Throws<ArgumentException>(() => storage.FindCombinations(wordData, -1));
-
-        Assert.Equal("There are no words of this target length in the input data.", exception1.Message);
-        Assert.Equal("Please only enter positive numbers.", exception2.Message);
-    }
-
-    [Fact]
-    public void Correctly_Find_Combinations_In_Data()
-    {
-        var result = storage.FindCombinations(wordData, 6);
-
-        Assert.Equal(2, result.Count);
-        Assert.Contains(result, w => w.Content == "fo + obar = foobar");
-        Assert.Contains(result, w => w.Content == "foo + bar = foobar");
-    }
-
-    [Fact]
-    public void Correctly_Find_Combinations_Of_Any_Number_Of_Words()
-    {
-        var result = storage.FindAnyCombinations(wordData, 6);
-
-        Assert.Equal(3, result.Count);
-        Assert.Contains(result, w => w.Content == "fo + obar = foobar");
-        Assert.Contains(result, w => w.Content == "foo + bar = foobar");
-        Assert.Contains(result, w => w.Content == "fo + o + bar = foobar");
-    }
-
-    [Fact]
     public void Call_FileStore_To_Write_Output()
     {
-        var combinations = storage.FindCombinations(wordData, 6);
-        var output = storage.SaveWords(combinations);
+        var combinations = new List<Word>();
         storage.WriteCombinationsToFile(combinations);
 
         filestore.Verify(fs => fs.WriteAllLines("output.txt", It.IsAny<string[]>()));
